@@ -1,0 +1,31 @@
+diff --git a/node_modules/@material-ui/styles/makeStyles/makeStyles.d.ts b/node_modules/@material-ui/styles/makeStyles/makeStyles.d.ts
+index f1ffc3d..d7a3be5 100644
+--- a/node_modules/@material-ui/styles/makeStyles/makeStyles.d.ts
++++ b/node_modules/@material-ui/styles/makeStyles/makeStyles.d.ts
+@@ -6,13 +6,14 @@ import {
+ } from '@material-ui/styles/withStyles';
+ import { Omit } from '@material-ui/types';
+ import { DefaultTheme } from '../defaultTheme';
++import { Theme } from '@material-ui/core';
+ 
+ /**
+  * `makeStyles` where the passed `styles` do not depend on props
+  */
+-export default function makeStyles<Theme = DefaultTheme, ClassKey extends string = string>(
+-  style: Styles<Theme, {}, ClassKey>,
+-  options?: Omit<WithStylesOptions<Theme>, 'withTheme'>
++export default function makeStyles<T = Theme, ClassKey extends string = string>(
++  style: Styles<T, {}, ClassKey>,
++  options?: Omit<WithStylesOptions<T>, 'withTheme'>
+ ): (props?: any) => ClassNameMap<ClassKey>;
+ /**
+  * `makeStyles` where the passed `styles` do depend on props
+@@ -21,7 +22,7 @@ export default function makeStyles<
+   Theme = DefaultTheme,
+   Props extends {} = {},
+   ClassKey extends string = string
+->(
++  >(
+   styles: Styles<Theme, Props, ClassKey>,
+   options?: Omit<WithStylesOptions<Theme>, 'withTheme'>
+ ): (props: Props) => ClassNameMap<ClassKey>;
