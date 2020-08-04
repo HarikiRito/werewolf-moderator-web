@@ -16,6 +16,7 @@ export abstract class BaseModel implements Base.RoleInfo, Base.RoleStat {
   totalLife: number = 1;
   isDeath = false;
   previousTarget?: BaseModel;
+  totalLynchVote: number = 0;
 
   protected constructor(role: Role) {
     this.name = `card.${role}.name`;
@@ -23,12 +24,31 @@ export abstract class BaseModel implements Base.RoleInfo, Base.RoleStat {
     this.role = role;
   }
 
-  public onDeath() {
+  onDeath() {
     this.totalLife--;
   }
-  public onLynched() {
+  onLynched() {
     this.totalLife--;
   }
-  public vote(player: BaseModel, action: VoteAction) {}
-  public selectPlayer(player: BaseModel) {}
+
+  onNightFall() {
+    this.resetVote();
+  }
+
+  resetVote() {
+    this.totalLynchVote = 0;
+  }
+
+  increaseLynchVote(voteCount = 1) {
+    this.totalLynchVote += voteCount;
+  }
+  vote(player: BaseModel, action: VoteAction) {
+    if (action === VoteAction.YES) {
+      player.increaseLynchVote();
+    }
+  }
+  selectPlayer(player: BaseModel) {}
+  setRole(role: Role) {
+    this.role = role;
+  }
 }

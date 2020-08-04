@@ -1,3 +1,5 @@
+import { Role } from '../model/base.model';
+
 export declare namespace Base {
   interface RoleInfo {
     point: number;
